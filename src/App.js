@@ -3,6 +3,7 @@ import './App.css';
 //Importing Components
 import Form from './components/Form';
 import TodoList from './components/TodoList';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 function App() {
 
@@ -36,17 +37,17 @@ function App() {
 
   //simpan ke penyimpanan lokal
   const saveLocalTodos = () => {
-    if(!localStorage.getItem("todos")){
-      localStorage.setItem('todos', JSON.stringify(todos));
-    }
+      // localStorage.setItem('todos', JSON.stringify(todos));
+      reactLocalStorage.set('todos', JSON.stringify(todos));
   };
 
   const getLocalTodos = () => {
-    if(localStorage.getItem("todos") === null){
-      localStorage.setItem('todos', JSON.stringify([]));
+    if(reactLocalStorage.get("todos") === null){
+      // localStorage.setItem('todos', JSON.stringify([]));
+      reactLocalStorage.set('todos', JSON.stringify([]));
     }
     else{
-      let todoLocal = JSON.parse(localStorage.getItem('todos'));
+      let todoLocal = JSON.parse(reactLocalStorage.get('todos'));
       setTodos(todoLocal);
     }
   }

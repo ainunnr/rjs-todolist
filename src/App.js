@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 //Importing Components
 import Form from './components/Form';
 import TodoList from './components/TodoList';
-import {reactLocalStorage} from 'reactjs-localstorage';
+// import {reactLocalStorage} from 'reactjs-localstorage';
 
 function App() {
 
@@ -32,22 +32,24 @@ function App() {
       }
     };
     filterHandler();
-    saveLocalTodos();
+    // saveLocalTodos();
+    
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos, status]);
 
   //simpan ke penyimpanan lokal
-  const saveLocalTodos = () => {
+  // const saveLocalTodos = () => {
       // localStorage.setItem('todos', JSON.stringify(todos));
-      reactLocalStorage.set('todos', JSON.stringify(todos));
-  };
+  // };
 
   const getLocalTodos = () => {
-    if(reactLocalStorage.get("todos") === null){
-      // localStorage.setItem('todos', JSON.stringify([]));
-      reactLocalStorage.set('todos', JSON.stringify([]));
+    if(localStorage.getItem("todos") === null){
+      localStorage.setItem("todos", JSON.stringify([]));
+      // reactLocalStorage.set('todos', JSON.stringify([]));
     }
     else{
-      let todoLocal = JSON.parse(reactLocalStorage.get('todos'));
+      // let data = localStorage.getItem('todos').trim();
+      let todoLocal = JSON.parse(localStorage.getItem("todos"));
       setTodos(todoLocal);
     }
   }
@@ -57,8 +59,7 @@ function App() {
       <header>
         <h1>To-do List App</h1>
       </header>
-      <Form inputText={inputText} todos={todos} setTodos={setTodos} setInputText = {setInputText} setStatus = {setStatus}
-         />
+      <Form inputText={inputText} todos={todos} setTodos={setTodos} setInputText = {setInputText} setStatus = {setStatus} />
       <TodoList setTodos={setTodos} todos={todos} filteredTodos = {filteredTodos} />
     </div>
   );
